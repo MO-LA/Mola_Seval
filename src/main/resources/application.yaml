@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/mola?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 11111111
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+server:
+  port: 8040
+  get:
+    url: 192.168.35.229:8040
+
+auth:
+  access: com_mola_io_jwt_secret_setting_access_token
+  refresh: com_mola_io_jwt_secret_setting_refresh_token
