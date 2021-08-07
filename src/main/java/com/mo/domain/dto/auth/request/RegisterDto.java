@@ -5,15 +5,15 @@ import com.mo.enums.Sex;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 
 @Getter
 @Setter
 public class RegisterDto {
-    @NotNull
+    @NotBlank
     private String id;
 
-    @NotNull
+    @NotBlank
     private String password;
 
     private Sex sex = null;
