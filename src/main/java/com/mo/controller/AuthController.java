@@ -6,7 +6,9 @@ import com.mo.domain.dto.auth.request.RegisterDto;
 import com.mo.domain.response.Response;
 import com.mo.domain.response.ResponseData;
 import com.mo.service.auth.AuthService;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,6 +27,7 @@ public class AuthController {
     private final Response response = new Response();
     private final ResponseData responseData = new ResponseData();
 
+    @ApiOperation("회원가입")
     @PostMapping("")
     public Response register(@RequestBody @Valid RegisterDto registerDto) {
         authService.register(registerDto);
@@ -35,6 +38,7 @@ public class AuthController {
         return response;
     }
 
+    @ApiOperation("로그인")
     @PostMapping("/login")
     public Response login(@RequestBody @Valid LoginDto loginDto) {
         try {
@@ -56,6 +60,7 @@ public class AuthController {
     /**
      * id 중복체크
      */
+    @ApiOperation("id 중복체크")
     @PostMapping("/DV")
     public ResponseData<String> idDuplicateVerification(@RequestBody IdDVDto idDVDto) {
         String massage = authService.IdDuplicateVerification(idDVDto.getId());
