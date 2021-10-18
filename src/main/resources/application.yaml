@@ -12,8 +12,8 @@ spring:
 server:
   port: 8040
   get:
-    url: 192.168.35.229:8040
+    url: 10.80.162.195:8040
 
 auth:
-  access: com_mola_io_jwt_secret_setting_access_token
-  refresh: com_mola_io_jwt_secret_setting_refresh_token
+  access: 0b53ce047ab11cce64949a8cbf4803c841e01090a8f96da0a638222faa4a2aadecd92a3d5346913cda80ea274ed9499e39bef9b327eaddea2b4a806ed72a7fe5
+  refresh: 1244ecc140cd3a9b0be4bda78f5a39e5211bbafde06fd1c515086a857d0e0157581de2d4c1e867cf37d7165e2932adb397fc3e12052345a57440367649943e39

@@ -2,21 +2,37 @@ package com.mo.service.auth;
 
 import com.mo.domain.dto.auth.request.LoginDto;
 import com.mo.domain.dto.auth.request.RegisterDto;
+import com.mo.domain.dto.auth.res.LoginResDto;
 import com.mo.domain.entity.User;
 import com.mo.domain.repository.AuthRepo;
-import io.jsonwebtoken.SignatureAlgorithm;
+import com.mo.domain.repository.UserRepo;
+import com.mo.enums.JwtAuth;
+import io.jsonwebtoken.*;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
+
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
+import javax.xml.bind.DatatypeConverter;
+import java.security.Key;
+import java.util.Date;
 
 @RequiredArgsConstructor
 @Service
 public class AuthServiceImpl implements AuthService{
 
     private final AuthRepo authRepository;
+    private final UserRepo userRepository;
 
     private final PasswordEncoder passwordEncoder;
 
@@ -45,19 +61,16 @@ public class AuthServiceImpl implements AuthService{
 
     @Override
     @Transactional(readOnly = true)
-    public boolean login(LoginDto loginDto) {
-        String pw = this.isThereUserById(loginDto.getId()).getPassword();
+    public LoginResDto login(LoginDto loginDto) {
+        User loginUser = this.isThereUserById(loginDto.getId());
 
-        System.out.println(pw);
-        System.out.println(loginDto.getPassword());
+        if(passwordEncoder.matches(loginDto.getPassword(), loginUser.getPassword())) {
+            String accessToken = this.createToken(loginUser.getIdx(), JwtAuth.ACCESS);
+            String refreshToken = this.createToken(loginUser.getIdx(), JwtAuth.REFRESH);
 
-        if(passwordEncoder.matches(loginDto.getPassword(), pw)) {
-            System.out.println("ㅇㅇ");
-            return true;
-        } else {
-            System.out.println("ㄴㄴ");
-            return false;
-        }
+
+            return new LoginResDto(accessToken, refreshToken);
+        } else throw new BadCredentialsException("비밀번호 불일치");
     }
 
     @Override
@@ -70,7 +83,7 @@ public class AuthServiceImpl implements AuthService{
     @Transactional(readOnly = true)
     public User isThereUserById(String id) {
         return authRepository.findUserById(id).orElseThrow(
-                () -> new IllegalArgumentException("없는 아이디입니다.")
+                () -> new UsernameNotFoundException("없는 아이디입니다.")
         );
     }
 
@@ -80,5 +93,64 @@ public class AuthServiceImpl implements AuthService{
         if (isThereId(id)) {
            return "사용 불가능한 id 입니다.";
         } else return "사용 가능한 id 입니다.";
+    }
+
+    public String createToken(Long idx, JwtAuth authType) {
+        Date expiredAt = new Date();
+        byte[] keyBytes = null;
+
+        if(authType == JwtAuth.ACCESS) {
+            keyBytes = Decoders.BASE64.decode(ACCESS_SECRET_KEY);
+
+            expiredAt = new Date(expiredAt.getTime() + 1000 * 60 * 60);
+        } else if (authType == JwtAuth.REFRESH) {
+            keyBytes = Decoders.BASE64.decode(REFRESH_SECRET_KEY);
+            expiredAt = new Date(expiredAt.getTime() + 1000 * 60 * 60 * 24 * 7);
+        }
+
+        SecretKey key = Keys.hmacShaKeyFor(keyBytes);
+
+        return Jwts.builder()
+                .setSubject(idx.toString())
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + expiredAt.getTime()))
+                .signWith(key, SignatureAlgorithm.HS512)
+                .compact();
+    }
+
+    @Transactional(readOnly = true)
+    public User accessTokenDecoding(String token) {
+        try {
+            Claims claims = decodingToken(token, ACCESS_SECRET_KEY);
+            Long idx = Long.valueOf(claims.getSubject()).longValue();
+            return userRepository.findById(idx).orElseGet(() -> {
+                throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "존재하지 않는 유저");
+            });
+
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    private Claims decodingToken(String token, String key) {
+        Claims claims;
+        try {
+            claims = Jwts.parserBuilder()
+                    .setSigningKey(DatatypeConverter.parseBase64Binary(key))
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+
+            return claims;
+        } catch (ExpiredJwtException e) {
+            e.printStackTrace();
+            throw new HttpClientErrorException(HttpStatus.GONE, "토큰 만료");
+        } catch (SignatureException | MalformedJwtException e) {
+            e.printStackTrace();
+            throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED, "토큰 위조");
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new HttpServerErrorException(HttpStatus.INTERNAL_SERVER_ERROR, "서버 에러");
+        }
     }
 }

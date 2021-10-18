@@ -2,6 +2,7 @@ package com.mo.service.auth;
 
 import com.mo.domain.dto.auth.request.LoginDto;
 import com.mo.domain.dto.auth.request.RegisterDto;
+import com.mo.domain.dto.auth.res.LoginResDto;
 import com.mo.domain.entity.User;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,7 +11,7 @@ public interface AuthService {
     void register(RegisterDto registerDto);
 
     @Transactional(readOnly = true)
-    boolean login(LoginDto loginDto);
+    LoginResDto login(LoginDto loginDto);
 
     @Transactional(readOnly = true)
     boolean isThereId(String id);
