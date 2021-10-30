@@ -116,6 +116,7 @@ public class AuthServiceImpl implements AuthService{
                 .compact();
     }
 
+    @Override
     @Transactional(readOnly = true)
     public User accessTokenDecoding(String token) {
         try {

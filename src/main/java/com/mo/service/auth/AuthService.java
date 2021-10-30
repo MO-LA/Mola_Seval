@@ -21,4 +21,7 @@ public interface AuthService {
 
     @Transactional(readOnly = true)
     String IdDuplicateVerification(String id);
+
+    @Transactional(readOnly = true)
+    User accessTokenDecoding(String token);
 }

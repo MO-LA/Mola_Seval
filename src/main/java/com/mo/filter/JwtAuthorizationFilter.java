@@ -50,8 +50,8 @@ public class JwtAuthorizationFilter implements Filter {
                     chain.doFilter(request, response);
                     return;
                 }
-//                User user = authService.accessTokenDecoding(token);
-//                request1.setAttribute("user", user);
+                User user = authService.accessTokenDecoding(token);
+                request1.setAttribute("user", user);
                 chain.doFilter(request, response);
             } catch (Exception e) {
                 handlerExceptionResolver.resolveException((HttpServletRequest) request, (HttpServletResponse) response, null, e);
