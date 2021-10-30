@@ -8,4 +8,13 @@ import lombok.Setter;
 public class Response {
     private int status;
     private String massage;
+
+    public Response() {
+    }
+
+    public Response(int status, String massage) {
+        this.status = status;
+        this.massage = massage;
+    }
+
 }
