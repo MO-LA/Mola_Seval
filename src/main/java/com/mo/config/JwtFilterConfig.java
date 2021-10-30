@@ -24,11 +24,12 @@ public class JwtFilterConfig {
             registrationBean.addUrlPatterns("/child/*");
             registrationBean.addUrlPatterns("/post/*");
             registrationBean.addUrlPatterns("/comment/*");
+            registrationBean.addUrlPatterns("/review/*");
             registrationBean.setOrder(2);
 
             return registrationBean;
         } catch (Exception e) {
-            throw new HttpServerErrorException(HttpStatus.INTERNAL_SERVER_ERROR, "fuck cors");
+            throw new HttpServerErrorException(HttpStatus.INTERNAL_SERVER_ERROR, "cors!!");
         }
     }
 
