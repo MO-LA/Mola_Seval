@@ -8,6 +8,8 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+    properties:
+      default_batch_fetch_size: 100
 
 server:
   port: 8040
