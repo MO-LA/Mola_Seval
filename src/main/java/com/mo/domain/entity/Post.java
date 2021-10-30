@@ -1,10 +1,16 @@
 package com.mo.domain.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@Builder
+@AllArgsConstructor
+@RequiredArgsConstructor
 @Entity
 public class Post {
     @Id @GeneratedValue
