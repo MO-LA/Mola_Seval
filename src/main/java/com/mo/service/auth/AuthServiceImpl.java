@@ -6,7 +6,7 @@ import com.mo.domain.dto.auth.res.LoginResDto;
 import com.mo.domain.entity.User;
 import com.mo.domain.repository.AuthRepo;
 import com.mo.domain.repository.UserRepo;
-import com.mo.enums.JwtAuth;
+import com.mo.enums.jwt.JwtAuth;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -22,9 +22,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 
 import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
-import java.security.Key;
 import java.util.Date;
 
 @RequiredArgsConstructor
