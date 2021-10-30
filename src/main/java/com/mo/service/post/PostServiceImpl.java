@@ -39,7 +39,7 @@ public class PostServiceImpl implements PostService {
         List<Post> content = postPage.getContent();
 
         for (Post post : content) {
-            PostListRes res = new PostListRes(post.getAuthor(), post.getDate(), post.getContent());
+            PostListRes res = new PostListRes(post.getAuthor(), post);
 
             result.add(res);
         }
