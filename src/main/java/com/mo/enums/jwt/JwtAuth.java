@@ -1,4 +1,4 @@
-package com.mo.enums;
+package com.mo.enums.jwt;
 
 public enum JwtAuth {
     REFRESH,

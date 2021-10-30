@@ -1,4 +1,4 @@
-package com.mo.enums;
+package com.mo.enums.user;
 
 public enum Sex {
     M,

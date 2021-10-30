@@ -1,6 +1,6 @@
 package com.mo.domain.entity;
 
-import com.mo.enums.Sex;
+import com.mo.enums.user.Sex;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
