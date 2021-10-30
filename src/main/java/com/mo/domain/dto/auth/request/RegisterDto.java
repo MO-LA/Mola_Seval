@@ -1,7 +1,7 @@
 package com.mo.domain.dto.auth.request;
 
 import com.mo.domain.entity.User;
-import com.mo.enums.Sex;
+import com.mo.enums.user.Sex;
 import lombok.Getter;
 import lombok.Setter;
 
