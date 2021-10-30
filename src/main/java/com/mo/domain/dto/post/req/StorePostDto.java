@@ -1,4 +1,4 @@
-package com.mo.domain.dto.post;
+package com.mo.domain.dto.post.req;
 
 import com.mo.domain.entity.Post;
 import com.mo.domain.entity.User;
