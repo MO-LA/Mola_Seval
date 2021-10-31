@@ -34,6 +34,7 @@ public class CommentServiceImpl implements CommentService{
                 () -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "없는 게시글입니다.")
         );
         Comment comment = storeCommentDto.toEntity(user, post);
+        post.getComments().add(comment);
         commentRepo.save(comment);
     }
 

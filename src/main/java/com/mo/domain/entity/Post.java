@@ -8,6 +8,7 @@ import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Builder
 @AllArgsConstructor
@@ -27,4 +28,7 @@ public class Post {
     @CreatedDate
     @Column
     private LocalDateTime date;
+
+    @OneToMany
+    private List<Comment> comments;
 }
