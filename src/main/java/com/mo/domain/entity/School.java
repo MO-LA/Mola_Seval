@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Builder
 @AllArgsConstructor
@@ -70,6 +71,9 @@ public class School {
 
     @Column(unique = true)
     private String schoolCode;
+
+    @OneToMany
+    private List<Review> reviews;
 
     public void setMaleSum(int maleSum) {
         this.maleSum = maleSum;
