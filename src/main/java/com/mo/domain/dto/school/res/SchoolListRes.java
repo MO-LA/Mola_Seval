@@ -8,6 +8,7 @@ import lombok.Setter;
 
 @Getter @Setter
 public class SchoolListRes {
+    private Long idx;
     private String schoolName;
     private Double estimate;
     private int estimatedPeople;
@@ -16,6 +17,7 @@ public class SchoolListRes {
     private String roadNameAddress;
 
     public SchoolListRes(School school) {
+        this.idx = school.getIdx();
         this.schoolName = school.getName();
         this.genderCheck = school.getGenderCheck();
         this.fondType = school.getFondType();
