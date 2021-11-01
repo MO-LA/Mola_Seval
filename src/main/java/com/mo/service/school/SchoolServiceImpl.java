@@ -8,6 +8,7 @@ import com.mo.enums.school.Fond;
 import com.mo.enums.school.FondType;
 import com.mo.enums.school.GenderCheck;
 import com.mo.enums.school.SchoolKind;
+import com.mo.lib.EstimateCalc;
 import lombok.RequiredArgsConstructor;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.TrustStrategy;
@@ -38,6 +39,8 @@ public class SchoolServiceImpl implements SchoolService {
 
     private final SchoolRepo schoolRepo;
     private final SchoolPageRepo schoolPageRepo;
+
+    private final EstimateCalc estimateCalc;
 
     private final JSONParser jsonParser = new JSONParser();
 
@@ -139,7 +142,7 @@ public class SchoolServiceImpl implements SchoolService {
         List<School> schoolList = schoolPage.toList();
 
         for (School school : schoolList) {
-            SchoolListRes res = new SchoolListRes(school);
+            SchoolListRes res = new SchoolListRes(school, estimateCalc.avgAndNumber(school));
 
             result.add(res);
         }

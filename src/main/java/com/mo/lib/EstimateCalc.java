@@ -5,9 +5,7 @@ import com.mo.domain.entity.Estimate;
 import com.mo.domain.entity.School;
 import com.mo.domain.repository.SchoolRepo;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.HttpClientErrorException;
 
 @RequiredArgsConstructor
 @Component
@@ -15,10 +13,7 @@ public class EstimateCalc {
 
     private final SchoolRepo schoolRepo;
 
-    public EstimateDataDto avgAndNumber(Long schoolIdx) {
-        School school = schoolRepo.findById(schoolIdx).orElseThrow(
-                () -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "없는 학교입니다.")
-        );
+    public EstimateDataDto avgAndNumber(School school) {
 
         double estimateSum = 0.0;
         int estimated = 0;

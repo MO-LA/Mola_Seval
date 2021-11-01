@@ -39,6 +39,9 @@ public class EstimateServiceImpl implements EstimateService {
     @Override
     @Transactional(readOnly = true)
     public Double estimateScoreAvg(Long schoolIdx) {
-        return estimateCalc.avgAndNumber(schoolIdx).getEstimateAvg();
+        School school = schoolRepo.findById(schoolIdx).orElseThrow(
+                () -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "없는 학교입니다.")
+        );
+        return estimateCalc.avgAndNumber(school).getEstimateAvg();
     }
 }
