@@ -36,4 +36,14 @@ public class EstimateController {
 
         return new ResponseData<>(HttpStatus.OK.value(), "성공", data);
     }
+
+    @ApiOperation("해당 학교에 내가 한 별점 불러오기")
+    @GetMapping("/{schoolIdx}")
+    public ResponseData<Integer> getMyEstimate(@PathVariable Long schoolIdx,
+                                               HttpServletRequest request) {
+        User user = (User) request.getAttribute("user");
+        int data = estimateService.myEstimate(schoolIdx, user);
+
+        return new ResponseData<>(HttpStatus.OK.value(), "성공", data);
+    }
 }

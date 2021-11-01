@@ -9,4 +9,7 @@ public interface EstimateService {
 
     @Transactional(readOnly = true)
     Double estimateScoreAvg(Long schoolIdx);
+
+    @Transactional(readOnly = true)
+    int myEstimate(Long schoolIdx, User user);
 }

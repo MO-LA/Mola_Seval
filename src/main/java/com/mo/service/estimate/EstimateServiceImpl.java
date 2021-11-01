@@ -44,4 +44,17 @@ public class EstimateServiceImpl implements EstimateService {
         );
         return estimateCalc.avgAndNumber(school).getEstimateAvg();
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public int myEstimate(Long schoolIdx, User user) {
+        School school = schoolRepo.findById(schoolIdx).orElseThrow(
+                () -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "없는 학교입니다.")
+        );
+        Estimate estimate = estimateRepo.findBySchoolAndUser(school, user).orElse(
+                new Estimate(user, school)
+        );
+
+        return estimate.getEstimateScore();
+    }
 }
