@@ -20,7 +20,7 @@ public class EstimateServiceImpl implements EstimateService {
 
     @Override
     @Transactional
-    public void petchEstimate(int score, Long schoolIdx, User user) {
+    public void patchEstimate(int score, Long schoolIdx, User user) {
         School school = schoolRepo.findById(schoolIdx).orElseThrow(
                 () -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "없는 학교입니다.")
         );

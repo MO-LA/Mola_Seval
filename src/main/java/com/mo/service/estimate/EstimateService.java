@@ -5,5 +5,5 @@ import org.springframework.transaction.annotation.Transactional;
 
 public interface EstimateService {
     @Transactional
-    void petchEstimate(int score, Long schoolIdx, User user);
+    void patchEstimate(int score, Long schoolIdx, User user);
 }

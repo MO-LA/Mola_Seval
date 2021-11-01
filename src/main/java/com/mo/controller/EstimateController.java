@@ -26,8 +26,10 @@ public class EstimateController {
                                   @RequestParam Long schoolIdx,
                                   HttpServletRequest request) {
         User user = (User) request.getAttribute("user");
-        estimateService.petchEstimate(estimate, schoolIdx, user);
+        estimateService.patchEstimate(estimate, schoolIdx, user);
 
         return new Response(HttpStatus.OK.value(), "성공");
     }
+
+
 }
