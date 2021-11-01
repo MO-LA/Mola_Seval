@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RequiredArgsConstructor
-@RequestMapping("/user")
+@RequestMapping("/post")
 @RestController
 public class PostController {
 
