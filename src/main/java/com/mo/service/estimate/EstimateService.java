@@ -6,4 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 public interface EstimateService {
     @Transactional
     void patchEstimate(int score, Long schoolIdx, User user);
+
+    @Transactional(readOnly = true)
+    Double estimateScoreAvg(Long schoolIdx);
 }

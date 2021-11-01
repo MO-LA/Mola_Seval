@@ -2,14 +2,12 @@ package com.mo.controller;
 
 import com.mo.domain.entity.User;
 import com.mo.domain.response.Response;
+import com.mo.domain.response.ResponseData;
 import com.mo.service.estimate.EstimateService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -31,5 +29,11 @@ public class EstimateController {
         return new Response(HttpStatus.OK.value(), "성공");
     }
 
+    @ApiOperation("별점 평균")
+    @GetMapping("/avg")
+    public ResponseData<Double> getAvg(Long schoolIdx) {
+        Double data = estimateService.estimateScoreAvg(schoolIdx);
 
+        return new ResponseData<>(HttpStatus.OK.value(), "성공", data);
+    }
 }

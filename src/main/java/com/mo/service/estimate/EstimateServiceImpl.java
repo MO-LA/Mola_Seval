@@ -5,6 +5,7 @@ import com.mo.domain.entity.School;
 import com.mo.domain.entity.User;
 import com.mo.domain.repository.EstimateRepo;
 import com.mo.domain.repository.SchoolRepo;
+import com.mo.lib.EstimateCalc;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,8 @@ public class EstimateServiceImpl implements EstimateService {
     private final SchoolRepo schoolRepo;
     private final EstimateRepo estimateRepo;
 
+    private final EstimateCalc estimateCalc;
+
     @Override
     @Transactional
     public void patchEstimate(int score, Long schoolIdx, User user) {
@@ -30,5 +33,12 @@ public class EstimateServiceImpl implements EstimateService {
 
         estimate.setEstimateScore(score);
         school.getEstimates().add(estimate);
+    }
+
+
+    @Override
+    @Transactional(readOnly = true)
+    public Double estimateScoreAvg(Long schoolIdx) {
+        return estimateCalc.avgAndNumber(schoolIdx).getEstimateAvg();
     }
 }
