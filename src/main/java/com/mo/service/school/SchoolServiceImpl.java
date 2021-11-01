@@ -1,7 +1,9 @@
 package com.mo.service.school;
 
+import com.mo.domain.dto.school.res.SchoolListRes;
 import com.mo.domain.entity.School;
 import com.mo.domain.repository.SchoolRepo;
+import com.mo.domain.repository.page.SchoolPageRepo;
 import com.mo.enums.school.Fond;
 import com.mo.enums.school.FondType;
 import com.mo.enums.school.GenderCheck;
@@ -15,6 +17,8 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,12 +29,15 @@ import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
+import java.util.ArrayList;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
 public class SchoolServiceImpl implements SchoolService {
 
     private final SchoolRepo schoolRepo;
+    private final SchoolPageRepo schoolPageRepo;
 
     private final JSONParser jsonParser = new JSONParser();
 
@@ -121,6 +128,23 @@ public class SchoolServiceImpl implements SchoolService {
         } catch (ParseException | KeyStoreException | NoSuchAlgorithmException | KeyManagementException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<SchoolListRes> getSchoolList(Pageable pageable) {
+        List<SchoolListRes> result = new ArrayList<>();
+
+        Page<School> schoolPage = schoolPageRepo.findAll(pageable);
+        List<School> schoolList = schoolPage.toList();
+
+        for (School school : schoolList) {
+            SchoolListRes res = new SchoolListRes(school);
+
+            result.add(res);
+        }
+
+        return result;
     }
 
     private GenderCheck stringToGenderCheck(String s) {
