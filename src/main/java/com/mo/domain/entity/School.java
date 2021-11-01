@@ -75,6 +75,9 @@ public class School {
     @OneToMany
     private List<Review> reviews;
 
+    @OneToMany
+    private List<Estimate> estimates;
+
     public void setMaleSum(int maleSum) {
         this.maleSum = maleSum;
     }

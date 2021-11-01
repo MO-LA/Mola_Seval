@@ -10,7 +10,7 @@ import lombok.Setter;
 public class SchoolListRes {
     private Long idx;
     private String schoolName;
-    private Double estimate;
+    private int estimate;
     private int estimatedPeople;
     private GenderCheck genderCheck;
     private FondType fondType;
