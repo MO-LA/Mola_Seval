@@ -32,6 +32,7 @@ public class EstimateServiceImpl implements EstimateService {
         );
 
         estimate.setEstimateScore(score);
+        estimateRepo.save(estimate);
         school.getEstimates().add(estimate);
     }
 

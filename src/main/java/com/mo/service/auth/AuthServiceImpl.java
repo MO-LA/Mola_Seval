@@ -87,10 +87,10 @@ public class AuthServiceImpl implements AuthService{
 
     @Override
     @Transactional(readOnly = true)
-    public String IdDuplicateVerification(String id) {
+    public Boolean IdDuplicateVerification(String id) {
         if (isThereId(id)) {
-           return "사용 불가능한 id 입니다.";
-        } else return "사용 가능한 id 입니다.";
+           return false;
+        } else return true;
     }
 
     public String createToken(Long idx, JwtAuth authType) {

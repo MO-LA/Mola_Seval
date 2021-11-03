@@ -14,6 +14,9 @@ public class EstimateCalc {
     private final SchoolRepo schoolRepo;
 
     public EstimateDataDto avgAndNumber(School school) {
+        if (school.getEstimates().isEmpty()) {
+            return new EstimateDataDto(0.0, 0);
+        }
 
         double estimateSum = 0.0;
         int estimated = 0;

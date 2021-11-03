@@ -25,6 +25,7 @@ public class JwtFilterConfig {
             registrationBean.addUrlPatterns("/post/*");
             registrationBean.addUrlPatterns("/comment/*");
             registrationBean.addUrlPatterns("/review/*");
+            registrationBean.addUrlPatterns("/estimate/*");
             registrationBean.setOrder(2);
 
             return registrationBean;

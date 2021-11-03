@@ -58,10 +58,10 @@ public class AuthController {
      */
     @ApiOperation("id 중복체크")
     @PostMapping("/DV")
-    public ResponseData<String> idDuplicateVerification(@RequestBody IdDVDto idDVDto) {
-        String massage = authService.IdDuplicateVerification(idDVDto.getId());
+    public ResponseData<Boolean> idDuplicateVerification(@RequestBody IdDVDto idDVDto) {
+        Boolean massage = authService.IdDuplicateVerification(idDVDto.getId());
 
-        ResponseData<String> responseData = new ResponseData<>();
+        ResponseData<Boolean> responseData = new ResponseData<>();
 
         responseData.setMassage("중복체크 성공");
         responseData.setStatus(HttpStatus.OK.value());

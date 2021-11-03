@@ -20,7 +20,7 @@ public interface AuthService {
     User isThereUserById(String id);
 
     @Transactional(readOnly = true)
-    String IdDuplicateVerification(String id);
+    Boolean IdDuplicateVerification(String id);
 
     @Transactional(readOnly = true)
     User accessTokenDecoding(String token);

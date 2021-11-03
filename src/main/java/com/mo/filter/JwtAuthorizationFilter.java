@@ -6,7 +6,9 @@ import com.mo.service.auth.AuthService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 
@@ -46,9 +48,7 @@ public class JwtAuthorizationFilter implements Filter {
                 String token = confirmToken.removeStartString(request1, "Bearer");
                 log.info(token);
                 if (token == null) {
-                    request1.setAttribute("user", null);
-                    chain.doFilter(request, response);
-                    return;
+                    throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED, "토큰 없음");
                 }
                 User user = authService.accessTokenDecoding(token);
                 request1.setAttribute("user", user);
