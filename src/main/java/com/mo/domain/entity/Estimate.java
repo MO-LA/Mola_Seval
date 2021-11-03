@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Getter
 @Entity
 public class Estimate {
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
 
     @Column

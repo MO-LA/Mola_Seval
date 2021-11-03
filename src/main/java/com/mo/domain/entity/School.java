@@ -18,7 +18,7 @@ import java.util.List;
 @Getter
 @Entity
 public class School {
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
 
     // 학교 이름
@@ -72,11 +72,14 @@ public class School {
     @Column(unique = true)
     private String schoolCode;
 
-    @OneToMany
+    @OneToMany(mappedBy = "school")
     private List<Review> reviews;
 
-    @OneToMany
+    @OneToMany(mappedBy = "school")
     private List<Estimate> estimates;
+
+    @OneToMany(mappedBy = "school")
+    private List<Pick> picks;
 
     public void setMaleSum(int maleSum) {
         this.maleSum = maleSum;

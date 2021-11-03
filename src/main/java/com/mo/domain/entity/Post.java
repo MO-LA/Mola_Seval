@@ -16,7 +16,7 @@ import java.util.List;
 @Getter
 @Entity
 public class Post {
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
 
     @Column
@@ -29,6 +29,6 @@ public class Post {
     @Column
     private LocalDateTime date;
 
-    @OneToMany
+    @OneToMany(mappedBy = "post")
     private List<Comment> comments;
 }
