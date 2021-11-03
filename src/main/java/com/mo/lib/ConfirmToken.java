@@ -29,7 +29,7 @@ public class ConfirmToken {
                 throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED, "잘못된 토큰 타입");
             }
             log.error("jwt token is null");
-            return null;
+            throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED, "토큰 없음");
         } catch (HttpClientErrorException e) {
             throw e;
         } catch (Exception e) {
