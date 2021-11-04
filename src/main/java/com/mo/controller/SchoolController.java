@@ -45,7 +45,7 @@ public class SchoolController {
     public ResponseData<List<SchoolListRes>> getSchoolListForFondType(
             @RequestParam FondType fondType,
             Pageable pageable
-            ) {
+    ) {
         List<SchoolListRes> data = schoolService.getSchoolListForFondType(fondType, pageable);
 
         return new ResponseData<>(HttpStatus.OK.value(), "성공", data);
@@ -56,7 +56,7 @@ public class SchoolController {
     public ResponseData<List<SchoolListRes>> getSchoolListForFond(
             @RequestParam Fond fond,
             Pageable pageable
-            ) {
+    ) {
         List<SchoolListRes> data = schoolService.getSchoolListForFond(fond, pageable);
 
         return new ResponseData<>(HttpStatus.OK.value(), "성공", data);
