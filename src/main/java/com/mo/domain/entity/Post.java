@@ -20,6 +20,9 @@ public class Post {
     private Long idx;
 
     @Column
+    private String title;
+
+    @Column
     private String content;
 
     @ManyToOne

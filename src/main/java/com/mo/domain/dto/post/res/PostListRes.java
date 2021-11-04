@@ -12,6 +12,8 @@ import java.time.LocalDateTime;
 public class PostListRes extends SimpleUserInfoRes {
     private LocalDateTime dateTime;
 
+    private String title;
+
     private String content;
 
     private Long idx;
@@ -22,6 +24,7 @@ public class PostListRes extends SimpleUserInfoRes {
     public PostListRes(User user, Post post) {
         super(user);
         this.dateTime = post.getDate();
+        this.title = post.getTitle();
         this.content = post.getContent();
         this.idx = post.getIdx();
     }
