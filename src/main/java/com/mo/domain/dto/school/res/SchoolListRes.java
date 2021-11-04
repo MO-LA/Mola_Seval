@@ -16,14 +16,14 @@ public class SchoolListRes {
     private int estimatedPeople;
     private GenderCheck genderCheck;
     private SchoolKind fondType;
-    private String roadNameAddress;
+    private String address;
 
     public SchoolListRes(School school, EstimateDataDto dto) {
         this.idx = school.getIdx();
         this.schoolName = school.getName();
         this.genderCheck = school.getGenderCheck();
         this.fondType = school.getSchoolKind();
-        this.roadNameAddress = school.getRoadNameAddress();
+        this.address = school.getAddress();
         this.estimate = dto.getEstimateAvg();
         this.estimatedPeople = dto.getEstimated();
     }
