@@ -150,6 +150,92 @@ public class SchoolServiceImpl implements SchoolService {
         return result;
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public List<SchoolListRes> getSchoolListForSchoolKind(SchoolKind schoolKind, Pageable pageable) {
+        List<SchoolListRes> result = new ArrayList<>();
+
+        Page<School> schoolPage = schoolPageRepo.findAllBySchoolKind(pageable, schoolKind);
+        List<School> schoolList = schoolPage.toList();
+
+        for (School school : schoolList) {
+            SchoolListRes res = new SchoolListRes(school, estimateCalc.avgAndNumber(school));
+
+            result.add(res);
+        }
+
+        return result;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<SchoolListRes> getSchoolListForFondType(FondType fondType, Pageable pageable) {
+        List<SchoolListRes> result = new ArrayList<>();
+
+        Page<School> schoolPage = schoolPageRepo.findAllByFondType(pageable, fondType);
+        List<School> schoolList = schoolPage.toList();
+
+        for (School school : schoolList) {
+            SchoolListRes res = new SchoolListRes(school, estimateCalc.avgAndNumber(school));
+
+            result.add(res);
+        }
+
+        return result;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<SchoolListRes> getSchoolListForFond(Fond fond, Pageable pageable) {
+        List<SchoolListRes> result = new ArrayList<>();
+
+        Page<School> schoolPage = schoolPageRepo.findAllByFond(pageable, fond);
+        List<School> schoolList = schoolPage.toList();
+
+        for (School school : schoolList) {
+            SchoolListRes res = new SchoolListRes(school, estimateCalc.avgAndNumber(school));
+
+            result.add(res);
+        }
+
+        return result;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<SchoolListRes> searchSchoolListByName(String q, Pageable pageable) {
+        List<SchoolListRes> result = new ArrayList<>();
+
+        Page<School> schoolPage = schoolPageRepo.findAllByNameContaining(pageable, q);
+        List<School> schoolList = schoolPage.toList();
+
+        for (School school : schoolList) {
+            SchoolListRes res = new SchoolListRes(school, estimateCalc.avgAndNumber(school));
+
+            result.add(res);
+        }
+
+        return result;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<SchoolListRes> searchSchoolListByRoadNameAddress(String q, Pageable pageable) {
+        List<SchoolListRes> result = new ArrayList<>();
+
+        Page<School> schoolPage = schoolPageRepo.findAllByRoadNameAddressContaining(pageable, q);
+        List<School> schoolList = schoolPage.toList();
+
+        for (School school : schoolList) {
+            SchoolListRes res = new SchoolListRes(school, estimateCalc.avgAndNumber(school));
+
+            result.add(res);
+        }
+
+        return result;
+    }
+
+
     private GenderCheck stringToGenderCheck(String s) {
         if (s.equals("남")) {
             return GenderCheck.M;
