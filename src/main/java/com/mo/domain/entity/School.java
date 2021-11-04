@@ -46,6 +46,10 @@ public class School {
     @Column
     private String roadNameAddress;
 
+    // 주소
+    @Column
+    private String address;
+
     // 학교 특성
     @Column
     @Enumerated(EnumType.STRING)
@@ -87,5 +91,9 @@ public class School {
 
     public void setFemaleSum(int femaleSum) {
         this.femaleSum = femaleSum;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

@@ -134,6 +134,34 @@ public class SchoolServiceImpl implements SchoolService {
     }
 
     @Override
+    @Transactional
+    public void storeAddress() {
+        try {
+            String basicSchoolInfoUrl = "https://www.schoolinfo.go.kr/openApi.do?apiKey=27f55f5a5873439fbd8e09aff467bbcc&apiType=0&pbanYr=2021&schulKndCode=04";
+            RestTemplate restTemplate = restTemplate();
+
+            String basicSchoolInfoRes = restTemplate.getForObject(basicSchoolInfoUrl, String.class);
+            JSONObject jsonObject = (JSONObject) jsonParser.parse(basicSchoolInfoRes);
+
+            JSONArray list = (JSONArray) jsonObject.get("list");
+            for (Object o : list) {
+                JSONObject object = (JSONObject) o;
+
+                String address = (String) object.get("ADRCD_NM");
+                String schoolCode = (String) object.get("SCHUL_CODE");
+
+                School school = schoolRepo.findBySchoolCode(schoolCode).orElse(
+                        new School()
+                );
+
+                school.setAddress(address);
+            }
+        } catch (ParseException | KeyStoreException | NoSuchAlgorithmException | KeyManagementException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public List<SchoolListRes> getSchoolList(Pageable pageable) {
         List<SchoolListRes> result = new ArrayList<>();

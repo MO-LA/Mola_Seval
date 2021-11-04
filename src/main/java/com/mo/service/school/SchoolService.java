@@ -14,6 +14,9 @@ public interface SchoolService {
 
     void StoreGenderSum();
 
+    @Transactional
+    void storeAddress();
+
     @Transactional(readOnly = true)
     List<SchoolListRes> getSchoolList(Pageable pageable);
 

@@ -20,4 +20,9 @@ class MoApplicationTests {
         schoolService.StoreGenderSum();
     }
 
+    @Test
+    void setAddress() {
+        schoolService.storeAddress();
+    }
+
 }
