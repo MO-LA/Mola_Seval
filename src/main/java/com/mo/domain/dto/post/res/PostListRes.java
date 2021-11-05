@@ -23,7 +23,7 @@ public class PostListRes extends SimpleUserInfoRes {
 
     public PostListRes(User user, Post post) {
         super(user);
-        this.dateTime = post.getDate();
+        this.dateTime = post.getCreatedAt();
         this.title = post.getTitle();
         this.content = post.getContent();
         this.idx = post.getIdx();

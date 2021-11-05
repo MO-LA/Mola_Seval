@@ -11,6 +11,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -80,6 +81,20 @@ public class SchoolController {
             Pageable pageable
     ) {
         List<SchoolListRes> data = schoolService.searchSchoolListByRoadNameAddress(q, pageable);
+
+        return new ResponseData<>(HttpStatus.OK.value(), "성공", data);
+    }
+
+    @ApiOperation("학교 통합 검색")
+    @GetMapping("/list/search")
+    public ResponseData<List<SchoolListRes>> searchSchoolList (
+            @RequestParam FondType fondType,
+            @RequestParam Fond fond,
+            @RequestParam SchoolKind schoolKind,
+            @RequestParam @Nullable String q,
+            Pageable pageable
+    ) {
+        List<SchoolListRes> data = schoolService.searchSchoolList(fondType, fond, schoolKind, q, pageable);
 
         return new ResponseData<>(HttpStatus.OK.value(), "성공", data);
     }

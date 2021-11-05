@@ -34,4 +34,13 @@ public interface SchoolService {
 
     @Transactional(readOnly = true)
     List<SchoolListRes> searchSchoolListByRoadNameAddress(String q, Pageable pageable);
+
+    @Transactional(readOnly = true)
+    List<SchoolListRes> searchSchoolList(
+            FondType fondType,
+            Fond fond,
+            SchoolKind schoolKind,
+            String q,
+            Pageable pageable
+    );
 }

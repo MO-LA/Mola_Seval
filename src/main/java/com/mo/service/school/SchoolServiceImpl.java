@@ -263,6 +263,32 @@ public class SchoolServiceImpl implements SchoolService {
         return result;
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public List<SchoolListRes> searchSchoolList(
+            FondType fondType,
+            Fond fond,
+            SchoolKind schoolKind,
+            String q,
+            Pageable pageable
+    ) {
+        List<SchoolListRes> result = new ArrayList<>();
+
+        if (q == null) {
+            q = "";
+        }
+        Page<School> schoolPage = schoolPageRepo.findAllByFondTypeAndFondAndSchoolKindAndRoadNameAddressContains(pageable, fondType, fond, schoolKind, q);
+        List<School> schoolList = schoolPage.toList();
+
+        for (School school : schoolList) {
+            SchoolListRes res = new SchoolListRes(school, estimateCalc.avgAndNumber(school));
+
+            result.add(res);
+        }
+
+        return result;
+    }
+
 
     private GenderCheck stringToGenderCheck(String s) {
         if (s.equals("남")) {

@@ -14,4 +14,5 @@ public interface SchoolPageRepo extends PagingAndSortingRepository<School, Long>
     Page<School> findAllByFond(Pageable pageable, Fond fond);
     Page<School> findAllByNameContaining(Pageable pageable, String name);
     Page<School> findAllByRoadNameAddressContaining(Pageable pageable, String roadNameAddress);
+    Page<School> findAllByFondTypeAndFondAndSchoolKindAndRoadNameAddressContains(Pageable pageable, FondType fondType, Fond fond, SchoolKind schoolKind, String roadNameAddress);
 }
