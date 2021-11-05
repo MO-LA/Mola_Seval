@@ -1,5 +1,6 @@
 package com.mo.service.school;
 
+import com.mo.domain.dto.school.res.SchoolInfoRes;
 import com.mo.domain.dto.school.res.SchoolListRes;
 import com.mo.enums.school.Fond;
 import com.mo.enums.school.FondType;
@@ -43,4 +44,7 @@ public interface SchoolService {
             String q,
             Pageable pageable
     );
+
+    @Transactional(readOnly = true)
+    SchoolInfoRes getSchoolInfo(Long schoolIdx);
 }

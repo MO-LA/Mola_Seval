@@ -1,5 +1,6 @@
 package com.mo.controller;
 
+import com.mo.domain.dto.school.res.SchoolInfoRes;
 import com.mo.domain.dto.school.res.SchoolListRes;
 import com.mo.domain.entity.School;
 import com.mo.domain.response.ResponseData;
@@ -95,6 +96,14 @@ public class SchoolController {
             Pageable pageable
     ) {
         List<SchoolListRes> data = schoolService.searchSchoolList(fondType, fond, schoolKind, q, pageable);
+
+        return new ResponseData<>(HttpStatus.OK.value(), "성공", data);
+    }
+
+    @ApiOperation("학교 상세 정보")
+    @GetMapping
+    public ResponseData<SchoolInfoRes> schoolInfo(@RequestParam Long schoolIdx) {
+        SchoolInfoRes data = schoolService.getSchoolInfo(schoolIdx);
 
         return new ResponseData<>(HttpStatus.OK.value(), "성공", data);
     }

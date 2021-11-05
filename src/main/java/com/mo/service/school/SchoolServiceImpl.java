@@ -1,5 +1,6 @@
 package com.mo.service.school;
 
+import com.mo.domain.dto.school.res.SchoolInfoRes;
 import com.mo.domain.dto.school.res.SchoolListRes;
 import com.mo.domain.entity.School;
 import com.mo.domain.repository.SchoolRepo;
@@ -20,9 +21,11 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import javax.net.ssl.SSLContext;
@@ -287,6 +290,16 @@ public class SchoolServiceImpl implements SchoolService {
         }
 
         return result;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public SchoolInfoRes getSchoolInfo(Long schoolIdx) {
+        School school = schoolRepo.findById(schoolIdx).orElseThrow(
+                () -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "없는 학교입니다.")
+        );
+
+        return new SchoolInfoRes(school);
     }
 
 
