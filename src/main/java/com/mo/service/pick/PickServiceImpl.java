@@ -33,4 +33,17 @@ public class PickServiceImpl implements PickService {
         user.getPicks().add(pick);
         school.getPicks().add(pick);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Boolean checkIsPicked(Long schoolIdx, User user) {
+        School school = schoolRepo.findById(schoolIdx).orElseThrow(
+                () -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "없는 학교입니다.")
+        );
+        Pick pick = pickRepo.findBySchoolAndUser(school, user).orElse(
+                new Pick(false, school, user)
+        );
+
+        return pick.getState();
+    }
 }
