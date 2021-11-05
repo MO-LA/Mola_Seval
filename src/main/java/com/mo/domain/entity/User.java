@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Builder
 @Data
@@ -36,4 +37,7 @@ public class User {
 
     @Column
     private String school;
+
+    @OneToMany(mappedBy = "user")
+    private List<Pick> picks;
 }

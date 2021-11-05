@@ -1,9 +1,15 @@
 package com.mo.domain.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 
+@Builder
+@RequiredArgsConstructor
+@AllArgsConstructor
 @Getter
 @Entity
 public class Pick {
@@ -20,4 +26,14 @@ public class Pick {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "school_idx")
     private School school;
+
+    public Pick(Boolean state, School school, User user) {
+        this.state = state;
+        this.school = school;
+        this.user = user;
+    }
+
+    public void setState(Boolean state) {
+        this.state = state;
+    }
 }
