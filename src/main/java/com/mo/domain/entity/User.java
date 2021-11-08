@@ -1,10 +1,7 @@
 package com.mo.domain.entity;
 
 import com.mo.enums.user.Sex;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;

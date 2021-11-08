@@ -30,10 +30,10 @@ public class PickController {
 
     @ApiOperation("찜 상태 확인")
     @GetMapping
-    public ResponseData<Boolean> checkIsPicked(@RequestParam Long schoolIddx,
+    public ResponseData<Boolean> checkIsPicked(@RequestParam Long schoolIdx,
                                                HttpServletRequest request) {
         User user = (User) request.getAttribute("user");
-        Boolean data = pickService.checkIsPicked(schoolIddx, user);
+        Boolean data = pickService.checkIsPicked(schoolIdx, user);
 
         return new ResponseData<>(HttpStatus.OK.value(), "성공", data);
     }

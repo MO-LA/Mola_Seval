@@ -1,5 +1,6 @@
 package com.mo.controller;
 
+import com.mo.domain.dto.school.res.SchoolListRes;
 import com.mo.domain.dto.user.res.SimpleUserInfoRes;
 import com.mo.domain.dto.user.res.UserInfoRes;
 import com.mo.domain.entity.User;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @RequiredArgsConstructor
 @RequestMapping("/user")
@@ -45,6 +47,15 @@ public class UserController {
     public ResponseData<UserInfoRes> getOtherUserDetailInfo(@RequestBody Long userIdx) {
         UserInfoRes data = userService.getOtherUserInfo(userIdx);
 
+        return new ResponseData<>(HttpStatus.OK.value(), "성공", data);
+    }
+
+    @ApiOperation("내가 찜한 학교 리스트")
+    @GetMapping("/picked")
+    public ResponseData<List<SchoolListRes>> getMyPickedSchools(HttpServletRequest request) {
+        User user = (User) request.getAttribute("user");
+
+        List<SchoolListRes> data = userService.getPickedSchools(user);
         return new ResponseData<>(HttpStatus.OK.value(), "성공", data);
     }
 }
