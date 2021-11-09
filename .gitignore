@@ -37,3 +37,6 @@ out/
 .vscode/
 
 src/main/resources/application.yaml
+docker-compose.override.yml
+docker-compose.yml
+.DS_Store
