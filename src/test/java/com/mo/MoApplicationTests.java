@@ -25,4 +25,9 @@ class MoApplicationTests {
         schoolService.storeAddress();
     }
 
+    @Test
+    void setMiddleSchool() {
+        schoolService.storeMiddleSchool();
+    }
+
 }

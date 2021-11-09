@@ -2,6 +2,7 @@ package com.mo.service.school;
 
 import com.mo.domain.dto.school.res.SchoolInfoRes;
 import com.mo.domain.dto.school.res.SchoolListRes;
+import com.mo.domain.dto.school.res.SearchMiddleSchoolRes;
 import com.mo.enums.school.Fond;
 import com.mo.enums.school.FondType;
 import com.mo.enums.school.SchoolKind;
@@ -17,6 +18,9 @@ public interface SchoolService {
 
     @Transactional
     void storeAddress();
+
+    @Transactional
+    void storeMiddleSchool();
 
     @Transactional(readOnly = true)
     List<SchoolListRes> getSchoolList(Pageable pageable);
@@ -47,4 +51,7 @@ public interface SchoolService {
 
     @Transactional(readOnly = true)
     SchoolInfoRes getSchoolInfo(Long schoolIdx);
+
+    @Transactional(readOnly = true)
+    List<SearchMiddleSchoolRes> searchMiddleSchool(String q);
 }

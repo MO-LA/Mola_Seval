@@ -2,7 +2,10 @@ package com.mo.service.school;
 
 import com.mo.domain.dto.school.res.SchoolInfoRes;
 import com.mo.domain.dto.school.res.SchoolListRes;
+import com.mo.domain.dto.school.res.SearchMiddleSchoolRes;
+import com.mo.domain.entity.MiddleSchool;
 import com.mo.domain.entity.School;
+import com.mo.domain.repository.MiddleSchoolRepo;
 import com.mo.domain.repository.SchoolRepo;
 import com.mo.domain.repository.page.SchoolPageRepo;
 import com.mo.enums.school.Fond;
@@ -34,6 +37,7 @@ import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -41,6 +45,7 @@ import java.util.List;
 public class SchoolServiceImpl implements SchoolService {
 
     private final SchoolRepo schoolRepo;
+    private final MiddleSchoolRepo middleSchoolRepo;
     private final SchoolPageRepo schoolPageRepo;
 
     private final EstimateCalc estimateCalc;
@@ -158,6 +163,35 @@ public class SchoolServiceImpl implements SchoolService {
                 );
 
                 school.setAddress(address);
+            }
+        } catch (ParseException | KeyStoreException | NoSuchAlgorithmException | KeyManagementException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    @Transactional
+    public void storeMiddleSchool() {
+        try {
+            String basicSchoolInfoUrl = "https://www.schoolinfo.go.kr/openApi.do?apiKey=27f55f5a5873439fbd8e09aff467bbcc&apiType=0&pbanYr=2021&schulKndCode=03";
+            RestTemplate restTemplate = restTemplate();
+
+            String basicSchoolInfoRes = restTemplate.getForObject(basicSchoolInfoUrl, String.class);
+            JSONObject jsonObject = (JSONObject) jsonParser.parse(basicSchoolInfoRes);
+
+            JSONArray list = (JSONArray) jsonObject.get("list");
+            for (Object o : list) {
+                JSONObject object = (JSONObject) o;
+
+                String schoolName = (String) object.get("SCHUL_NM");
+                String roadNameAddress = (String) object.get("SCHUL_RDNMA");
+
+
+                MiddleSchool middleSchool = MiddleSchool.builder()
+                        .name(schoolName)
+                        .roadAddressName(roadNameAddress)
+                        .build();
+                middleSchoolRepo.save(middleSchool);
             }
         } catch (ParseException | KeyStoreException | NoSuchAlgorithmException | KeyManagementException e) {
             e.printStackTrace();
@@ -300,6 +334,22 @@ public class SchoolServiceImpl implements SchoolService {
         );
 
         return new SchoolInfoRes(school);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<SearchMiddleSchoolRes> searchMiddleSchool(String q) {
+        List<SearchMiddleSchoolRes> result = new ArrayList<>();
+
+        List<MiddleSchool> middleSchools = middleSchoolRepo.findAllByNameContaining(q).orElse(
+                Collections.emptyList()
+        );
+
+        for (MiddleSchool middleSchool : middleSchools) {
+            result.add(new SearchMiddleSchoolRes(middleSchool));
+        }
+
+        return result;
     }
 
 

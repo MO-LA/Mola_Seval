@@ -2,6 +2,7 @@ package com.mo.controller;
 
 import com.mo.domain.dto.school.res.SchoolInfoRes;
 import com.mo.domain.dto.school.res.SchoolListRes;
+import com.mo.domain.dto.school.res.SearchMiddleSchoolRes;
 import com.mo.domain.entity.School;
 import com.mo.domain.response.ResponseData;
 import com.mo.enums.school.Fond;
@@ -104,6 +105,14 @@ public class SchoolController {
     @GetMapping
     public ResponseData<SchoolInfoRes> schoolInfo(@RequestParam Long schoolIdx) {
         SchoolInfoRes data = schoolService.getSchoolInfo(schoolIdx);
+
+        return new ResponseData<>(HttpStatus.OK.value(), "성공", data);
+    }
+
+    @ApiOperation(value = "중학교 검색", notes = "q = 학교 이름")
+    @GetMapping("/middle")
+    public ResponseData<List<SearchMiddleSchoolRes>> searchMiddleSchool(@RequestParam String q) {
+        List<SearchMiddleSchoolRes> data = schoolService.searchMiddleSchool(q);
 
         return new ResponseData<>(HttpStatus.OK.value(), "성공", data);
     }
