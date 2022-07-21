@@ -1,0 +1,24 @@
+version: "3.2"
+services:
+  database:
+    container_name: database
+    image: mysql
+    volumes:
+      - ~/docker/mysql/etc/mysql/conf.d:/etc/mysql/conf.d:ro
+      - ~/docker/mysql/var/lib/mysql:/var/lib/mysql
+      - ~/docker/mysql/var/log/mysql:/var/log/mysql
+    command: ['--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
+    ports:
+      - "3306:3306"
+    restart: always
+
+  application:
+    container_name: Mola_Server
+    build: .
+    volumes:
+      - type: bind
+        source: ./Mola_Server_VM
+    ports:
+      - "8081:8081"
+    depends_on:
+      - database
