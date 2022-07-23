@@ -2,7 +2,7 @@ FROM java:11
 
 VOLUME /tmp
 
-EXPOSE 8081
+EXPOSE 8080
 
 ARG JAR_FILE=./build/libs/*.jar
 
